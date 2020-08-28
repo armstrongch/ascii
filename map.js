@@ -1,49 +1,83 @@
 var map = 
 {
-	width: 8,
-	height: 8,
-	cells: []
-};
-
-function drawMap()
-{
-	if (map.cells.length == 0)
+	width: 11,
+	height: 9,
+	cells: [],
+	draw: function()
 	{
-		generateMap();
-	}
-	var tableHTML = "";
-	for (h = -1; h < map.height + 1; h++)
-	{
-		tableHTML += "<tr>";
-		for (w = -1; w < map.width + 1; w++)
+		if (this.cells.length == 0)
 		{
-			if ((w == -1) || (h == -1) || (w == map.width) || (h == map.height))
+			this.generate();
+		}
+		var tableHTML = "";
+		for (h = -1; h < this.height + 1; h++)
+		{
+			tableHTML += "<tr>";
+			for (w = -1; w < this.width + 1; w++)
 			{
-				tableHTML += "<td>X</td>";
+				if ((w == -1) || (h == -1) || (w == this.width) || (h == this.height))
+				{
+					tableHTML += "<td>X</td>";
+				}
+				else if ((player.position.x == w) && (player.position.y == h))
+				{
+					tableHTML += "<td>@</td>";
+				}
+				else if (this.cells[h][w].length > 0)
+				{
+					tableHTML += "<td>" + this.cells[h][w] + "</td>";
+				}
+				else if ((goblinCells.length > 0) && (goblinCells[h][w].length > 0))
+				{
+					tableHTML += "<td>" + goblinCells[h][w] + "</td>";
+				}
+				else if ((bulletCells.length > 0) && (bulletCells[h][w].length > 0))
+				{
+					tableHTML += "<td>" + bulletCells[h][w] + "</td>";
+				}
+				else
+				{
+					tableHTML += "<td></td>";
+				}
 			}
-			else if ((player.position.x == w) && (player.position.y == h))
+			tableHTML += "</tr>";
+		}
+		$('#mapTable').html(tableHTML);
+		this.drawUI();
+	},
+	generate: function()
+	{
+		for (h = 0; h < this.height; h++)
+		{
+			var row = [];
+			for (w = 0; w < this.width; w++)
 			{
-				tableHTML += "<td>@</td>";
+				row.push("");
+			}
+			this.cells.push(row);
+		}
+	},
+	drawUI()
+	{
+		var healthCountHtml = "";
+		for (let i = 0; i < player.health; i++)
+		{
+			healthCountHtml += "I ";
+		}
+		$('#healthSpan').html(healthCountHtml);
+		
+		var ammoCountHtml = "";
+		for (let i = 0; i < player.ammo; i++)
+		{
+			if (player.reloading)
+			{
+				ammoCountHtml += "+"
 			}
 			else
 			{
-				tableHTML += "<td>" + map.cells[h][w] + "</td>";
+				ammoCountHtml += "*";
 			}
 		}
-		tableHTML += "</tr>";
+		$('#ammoSpan').html(ammoCountHtml);
 	}
-	$('#mapTable').html(tableHTML);
-}
-
-function generateMap()
-{
-	for (h = 0; h < map.height; h++)
-	{
-		var row = [];
-		for (w = 0; w < map.width; w++)
-		{
-			row.push("");
-		}
-		map.cells.push(row);
-	}
-}
+};

@@ -2,23 +2,41 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>INSERT TITLE HERE</title>
+		<title>Mr. ASCII</title>
 		<style type="text/css">
 			.invisible {
 				display: none;
 			}
 			* {
-				font-size: 18px;
+				font-size: 32px;
+				text-align: center;
+			}
+			table {
+				margin-left: auto;
+				margin-right: auto;
 			}
 		</style>
 	</head>
 	<body onload="setup()">
+		<p>
+			Health:<br/>
+			<span id='healthSpan'></span><br/>
+			Ammo:<br/>
+			<span id='ammoSpan'></span>
+		</p>
 		<table id='mapTable'>
-			
 		</table>
+		<p>
+			Arrows or WSAD to Move<br/>
+			Space to Shoot and Reload<br/>
+			Defeat the Goblins!
+		</p>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
 		<script src="setup.js" type="text/javascript"></script>
 		<script src="map.js" type="text/javascript"></script>
 		<script src="player.js" type="text/javascript"></script>
+		<script src="bullet.js" type="text/javascript"></script>
+		<script src="loop.js" type="text/javascript"></script>
+		<script src="goblin.js" type="text/javascript"></script>
 	</body>
 </html>
